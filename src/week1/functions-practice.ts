@@ -45,9 +45,13 @@ console.log('');
 // TODO 2: Create your first generic function
 // This function should work with ANY type of array and return the first item
 
-// Your generic function here:
-function getFirstItem<T>(/* your parameters */): T | undefined {
-  // Implementation: return first item or undefined if array is empty
+// Your generic function here (if you have a function that has some type of data inside where you want the data to be 
+// changing it's type based on what you passed in or what you return):
+function getFirstItem<T>(items: T[]): T | undefined {
+  if (items.length > 0) {
+    return items[0]
+  }
+  return undefined
 }
 
 // Test with different types:
@@ -66,16 +70,12 @@ console.log('');
 // Create a function that works with objects that have a 'length' property
 
 function getItemWithLength<T extends { length: number }>(item: T): string {
-  // Return a string describing the item and its length
-  // Example: "Item has length: 5"
+  return `${typeof(item)} has length: ${item.length}`
 }
 
-// Test it:
-console.log('3. Length Function Tests:');
 console.log(getItemWithLength('Hello')); // String has length
 console.log(getItemWithLength([1, 2, 3, 4])); // Array has length
 console.log(getItemWithLength({ length: 10, name: 'test' })); // Custom object
-console.log('');
 
 // ============================================
 // SECTION 3: PRACTICAL SPORTS UTILITIES (30 minutes)
