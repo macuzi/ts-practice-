@@ -88,8 +88,7 @@ function processData<T>(
   data: T[],
   processor: (item: T) => boolean
 ): T[] {
-  // Your implementation here
-  // Should filter the array based on the processor function
+  return data.filter(processor)
 }
 
 // Test cases for your processData function:
