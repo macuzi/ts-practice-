@@ -100,4 +100,21 @@ const highScoringGames = processData(gameScores, score => score > 100);
 console.log('High scoring games:', highScoringGames); // Should be [108, 112, 105]
 
 // Test 2: Filter players by position
-interface
+interface Player {
+  name: string;
+  position: 'PG' | 'SG' | 'SF' | 'PF' | 'C';
+  points: number;
+}
+
+const teamRoster: Player[] = [
+  { name: 'Magic', position: 'PG', points: 19 },
+  { name: 'Kobe', position: 'SG', points: 25 },
+  { name: 'LeBron', position: 'SF', points: 27 },
+  { name: 'Kareem', position: 'C', points: 24 }
+];
+
+const guards = processData(teamRoster, player => player.position === 'PG' || player.position === 'SG');
+console.log('Guards:', guards.map(p => p.name)); // Should be ['Magic', 'Kobe']
+
+const highScorers = processData(teamRoster, player => player.points > 24);
+console.log('High scorers:', highScorers.map(p => p.name)); // Should be ['Kobe', 'LeBron']
