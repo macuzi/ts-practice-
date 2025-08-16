@@ -91,9 +91,6 @@ function processData<T>(
   return data.filter(processor)
 }
 
-// Test cases for your processData function:
-console.log('4. Process Data Tests:');
-
 // Test 1: Filter numbers greater than 100
 const gameScores = [95, 108, 112, 87, 99, 105];
 const highScoringGames = processData(gameScores, score => score > 100);
@@ -114,10 +111,10 @@ const teamRoster: Player[] = [
 ];
 
 const guards = processData(teamRoster, player => player.position === 'PG' || player.position === 'SG');
-console.log('Guards:', guards.map(p => p.name)); // Should be ['Magic', 'Kobe']
+console.log('Guards:', guards.map(p => p.name)); // Should be ['Baron', 'Rose', 'Iverson]
 
 const highScorers = processData(teamRoster, player => player.points > 24);
-console.log('High scorers:', highScorers.map(p => p.name)); // Should be ['Kobe', 'LeBron']
+console.log('High scorers:', highScorers.map(p => p.name)); // Should be ['Kobe', 'Iverson']
 
 // ============================================
 // SECTION 4: ADVANCED GENERICS (25 minutes)
@@ -143,4 +140,35 @@ const scoringData = transformData(teamRoster, player => ({
 }));
 
 console.log('Scoring data:', scoringData);
+
+// TODO 6: Generic function with multiple constraints
+// Create a function that works with objects that have both 'name' and 'points' properties
+
+function findTopPerformer<T extends { name: string; points: number }>(
+  items: T[],
+  count: number = 1
+): T[] {
+  // Implementation:
+  // 1. Sort by value (descending)
+  const bestScorers = items.sort((a, b) => b.points - a.points).slice(0, count)
+  // 2. Return top 'count' items
+  return bestScorers
+}
+
+// Test with different object types:
+// console.log('6. Top Performer Tests:');
+
+const playerStats = [
+  { name: 'Baron Davis', position: 'PG', points: 16.1 },
+  { name: 'Kobe Bryant', position: 'SG', points: 25.0 },
+  { name: 'Derrick Rose', position: 'PG', points: 17.4 },
+  { name: 'Allen Iverson', position: 'PG', points: 26.7 }
+];
+
+const topScorer = findTopPerformer(playerStats, 1);
+// console.log('Top scorer:', topScorer[0].name);
+
+const topThree = findTopPerformer(playerStats, 3);
+// console.log('Top 3 scorers:', topThree.map(p => p.name));
+
 
