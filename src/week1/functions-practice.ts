@@ -107,10 +107,10 @@ interface Player {
 }
 
 const teamRoster: Player[] = [
-  { name: 'Magic', position: 'PG', points: 19 },
-  { name: 'Kobe', position: 'SG', points: 25 },
-  { name: 'LeBron', position: 'SF', points: 27 },
-  { name: 'Kareem', position: 'C', points: 24 }
+  { name: 'Baron Davis', position: 'PG', points: 16.1 },
+  { name: 'Kobe Bryant', position: 'SG', points: 25.0 },
+  { name: 'Derrick Rose', position: 'PG', points: 17.4 },
+  { name: 'Allen Iverson', position: 'PG', points: 26.7 }
 ];
 
 const guards = processData(teamRoster, player => player.position === 'PG' || player.position === 'SG');
@@ -118,3 +118,29 @@ console.log('Guards:', guards.map(p => p.name)); // Should be ['Magic', 'Kobe']
 
 const highScorers = processData(teamRoster, player => player.points > 24);
 console.log('High scorers:', highScorers.map(p => p.name)); // Should be ['Kobe', 'LeBron']
+
+// ============================================
+// SECTION 4: ADVANCED GENERICS (25 minutes)
+// ============================================
+
+function transformData<TInput, TOutput>(
+  data: TInput[],
+  transformer: (item: TInput) => TOutput
+): TOutput[] {
+  // Should apply the transformer to each item and return new array
+  return data.map(transformer)
+}
+
+// Transform players to just their names
+const playerNames = transformData(teamRoster, player => player.name);
+console.log('Player names:', playerNames);
+
+// Transform players to their scoring averages (pretend these are season averages)
+const scoringData = transformData(teamRoster, player => ({
+  player: player.name,
+  ppg: player.points,
+  category: player.points > 25 ? 'Elite' : 'Good'
+}));
+
+console.log('Scoring data:', scoringData);
+
