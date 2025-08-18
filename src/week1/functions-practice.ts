@@ -166,9 +166,90 @@ const playerStats = [
 ];
 
 const topScorer = findTopPerformer(playerStats, 1);
-// console.log('Top scorer:', topScorer[0].name);
+console.log('Top scorer:', topScorer[0].name);
 
 const topThree = findTopPerformer(playerStats, 3);
-// console.log('Top 3 scorers:', topThree.map(p => p.name));
+console.log('Top 3 scorers:', topThree.map(p => p.name));
 
+
+// ============================================
+// CHALLENGE SECTION (30 minutes)
+// ============================================
+
+// TODO 7: MEGA CHALLENGE - Build a generic Sports Analytics Engine!
+// This combines everything and gives you a taste of what you'll build later
+
+interface GameData {
+  date: string;
+  homeTeam: string;
+  awayTeam: string;
+  homeScore: number;
+  awayScore: number;
+  venue: string;
+}
+
+class SportsAnalyzer<TGameData extends GameData> {
+  private games: TGameData[] = [];
+
+  // TODO: Implement these methods using generics
+
+  addGame(game: TGameData): void {
+    // Add game to the games array
+    this.games.push(game)
+  }
+
+  filterGames(predicate: (game: TGameData) => boolean): TGameData[] {
+    // Use your processData function or similar logic
+  }
+
+  transformGames<TResult>(transformer: (game: TGameData) => TResult): TResult[] {
+    // Use your transformData function or similar logic
+  }
+
+  getTeamRecord(teamName: string): { wins: number; losses: number; winRate: number } {
+
+    const record = {
+      wins: 0,
+      losses: 0,
+      winRate: 0
+    }
+
+    // Calculate wins/losses for a team
+    const data = this.games.filter(game => game.homeTeam === teamName || game.awayTeam === teamName)
+
+    for (const t of data) {
+      // if lakers are hometeam (and score more points) or away (and score more points)
+       if (t.homeTeam === teamName && t.homeScore > t.awayScore || t.awayTeam === teamName && t.awayScore > t.homeScore) {
+        console.log(teamName)
+        record.wins++
+       } else {
+        // then they got outscored 
+        record.losses++
+      }
+    }
+    
+  record.winRate = (record.wins / data.length) * 100
+  // record will return { wins: 2. losses: 0, winRate: 100 }
+  return record
+}
+
+
+  getAverageScore(teamName: string, isHome: boolean): number {
+    // Calculate average score for a team at home or away
+  }
+}
+
+// Test your Sports Analyzer:
+const analyzer = new SportsAnalyzer<GameData>();
+
+const sampleGames: GameData[] = [
+  { date: '2024-01-10', homeTeam: 'Lakers', awayTeam: 'Warriors', homeScore: 108, awayScore: 102, venue: 'Crypto.com Arena' },
+  { date: '2024-01-12', homeTeam: 'Celtics', awayTeam: 'Lakers', homeScore: 95, awayScore: 110, venue: 'TD Garden' },
+  { date: '2024-01-15', homeTeam: 'Warriors', awayTeam: 'Celtics', homeScore: 115, awayScore: 109, venue: 'Chase Center' }
+];
+
+sampleGames.forEach(game => analyzer.addGame(game));
+
+console.log('7. Sports Analyzer Tests:');
+console.log('Lakers record:', analyzer.getTeamRecord('Lakers'));
 
