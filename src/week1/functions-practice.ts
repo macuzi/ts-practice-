@@ -208,9 +208,10 @@ class SportsAnalyzer<TGameData extends GameData> {
       winRate: 0
     }
 
-    // Calculate wins/losses for a team
+    // filter object to return only the games lakers have played, from the sample games object below
     const data = this.games.filter(game => game.homeTeam === teamName || game.awayTeam === teamName)
-
+    
+    // Calculate wins/losses for a team
     for (const t of data) {
       // if lakers are hometeam (and score more points) or away (and score more points)
        if (t.homeTeam === teamName && t.homeScore > t.awayScore || t.awayTeam === teamName && t.awayScore > t.homeScore) {
