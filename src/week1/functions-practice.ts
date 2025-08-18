@@ -1,10 +1,4 @@
 // ============================================
-// FUNCTIONS & GENERICS PRACTICE - Day 3-4
-// ============================================
-
-console.log('🔧 Starting Functions & Generics Practice!\n');
-
-// ============================================
 // SECTION 1: FUNCTION BASICS (20 minutes)
 // ============================================
 
@@ -176,7 +170,7 @@ console.log('Top 3 scorers:', topThree.map(p => p.name));
 // CHALLENGE SECTION (30 minutes)
 // ============================================
 
-// TODO 7: MEGA CHALLENGE - Build a generic Sports Analytics Engine!
+// TODO 7: Build a generic Sports Analytics Engine!
 // This combines everything and gives you a taste of what you'll build later
 
 interface GameData {
