@@ -194,7 +194,7 @@ class SportsAnalyzer<TGameData extends GameData> {
   }
 
   filterGames(predicate: (game: TGameData) => boolean): TGameData[] {
-    return this.games
+    return this.games.filter(predicate)
   }
 
   transformGames<TResult>(transformer: (game: TGameData) => TResult): TResult[] {
