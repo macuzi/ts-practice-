@@ -190,10 +190,11 @@ class SportsAnalyzer<TGameData extends GameData> {
   addGame(game: TGameData): void {
     // Add game to the games array
     this.games.push(game)
+    console.log(this.games)
   }
 
   filterGames(predicate: (game: TGameData) => boolean): TGameData[] {
-    // Use your processData function or similar logic
+    return this.games
   }
 
   transformGames<TResult>(transformer: (game: TGameData) => TResult): TResult[] {
@@ -244,6 +245,7 @@ const sampleGames: GameData[] = [
 ];
 
 sampleGames.forEach(game => analyzer.addGame(game));
+const filteredGames = analyzer.filterGames(game => game.homeScore > game.awayScore)
 
 console.log('7. Sports Analyzer Tests:');
 console.log('Lakers record:', analyzer.getTeamRecord('Lakers'));
