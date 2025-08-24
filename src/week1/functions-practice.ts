@@ -198,7 +198,7 @@ class SportsAnalyzer<TGameData extends GameData> {
   }
 
   transformGames<TResult>(transformer: (game: TGameData) => TResult): TResult[] {
-    // Use your transformData function or similar logic
+    return this.games.map(transformer)
   }
 
   getTeamRecord(teamName: string): { wins: number; losses: number; winRate: number } {
