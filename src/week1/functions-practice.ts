@@ -232,6 +232,22 @@ class SportsAnalyzer<TGameData extends GameData> {
 
   getAverageScore(teamName: string, isHome: boolean): number {
     // Calculate average score for a team at home or away
+    const teamGames = []
+    const totalScore = []
+    // console.log(teamName)
+    this.games.map((game) => {
+      if (game.homeTeam === teamName) totalScore.push(game.homeScore)
+      
+      if (game.awayTeam === teamName) totalScore.push(game.awayScore)
+      // if (game.homeTeam === teamName || game.awayTeam === teamName) {
+      //   teamGames.push(game)
+      // }
+    })
+    
+
+    const averageScores = totalScore.reduce((acc, currentValue) => {
+      acc + currentValue
+    }, totalScore[0])
   }
 }
 
