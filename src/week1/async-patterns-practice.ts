@@ -49,25 +49,18 @@ async function fetchTeamStats(teamName: string): Promise<any> {
 // TODO 2: Basic error handling patterns
 async function safeApiCall(): Promise<void> {
   try {
-    console.log('1. Basic Async Tests:');
-    
     // Test successful call
     const lakersStats = await fetchTeamStats('Lakers');
     console.log('Lakers Stats:', lakersStats);
     
     // Test error handling
-    // const invalidStats = await fetchTeamStats('INVALID'); // Should throw
+    const invalidStats = await fetchTeamStats('INVALID'); // Should throw
     
   } catch (error) {
-    console.error('Error caught:', error.message);
+    console.error('Error caught:', error);
   }
   console.log('');
 }
-
-// ============================================
-// SECTION 2: CONCURRENT OPERATIONS (30 minutes)
-// Practice Goal: Fetch multiple data sources simultaneously
-// ============================================
 
 // TODO 3: Implement concurrent team stats fetching
 // Challenge: Fetch stats for multiple teams at once
@@ -87,11 +80,23 @@ async function fetchMultipleTeamStats(teamNames: string[]): Promise<TeamStats[]>
   // 3. Handle partial failures gracefully
   
   const startTime = Date.now();
+  const endTime = Date.now();
+  const duration = endTime - startTime;
   
   // Your implementation here:
   // Hint: Use Promise.all() with teamNames.map()
+  const results = await Promise.all(
+    teamNames.map(async (team) => {
+      try {
+        return await fetchTeamStats(team)
+      } catch (error) {
+        return null
+      }
+    })
+  )
+  console.log(`Fetched the results in ${duration}ms ${JSON.stringify(results, null, 2)}`);
   
-  return []; // Replace with actual implementation
+  return results; // Replace with actual implementation
 }
 
 // TODO 4: Advanced concurrent patterns
@@ -235,7 +240,7 @@ async function testRetryAndRateLimit(): Promise<void> {
       const elapsed = Date.now() - startTime;
       console.log(`${elapsed}ms: Got odds for ${game}`);
     } catch (error) {
-      console.error(`Failed to get odds for ${game}:`, error.message);
+      console.error(`Failed to get odds for ${game}:`,);
     }
   }
   
@@ -262,7 +267,7 @@ class OddsStreamSimulator {
     // 1. Use setInterval to simulate live updates every 2 seconds
     // 2. Generate random odds changes
     // 3. Notify all listeners
-    // 4. Sometimes simulate connection errors
+    // 4. Sometimes simulate connections
   }
   
   stopStream(): void {
@@ -453,7 +458,7 @@ async function testErrorRecovery(): Promise<void> {
     const gameData = await fetcher.fetchGameData('Lakers vs Warriors');
     console.log('✅ Successfully fetched game data');
   } catch (error) {
-    console.log('❌ All fallbacks failed:', error.message);
+    console.log('❌ All fallbacks failed:', error);
   }
   
   // Test batch processing with error isolation
@@ -609,7 +614,7 @@ async function main(): Promise<void> {
 }
 
 // Uncomment to run all sections:
-// main();
+main();
 
 // Or run individual sections for focused practice:
 // safeApiCall();          // Start with this
