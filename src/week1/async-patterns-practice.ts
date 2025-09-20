@@ -144,8 +144,13 @@ async function fetchFromMultipleSources(teamName: string): Promise<any> {
   };
   
   // Your implementation using Promise.race():
+
+  // i have function definitions that return Promises, so you need to call them to get the actual Promise objects.
+  const fastest = await Promise.race([espnApi(), nbaApi(), sportsRadarApi()])
+
+  console.log('fetchFromMultipleSources')
   
-  return null;
+  return fastest;
 }
 
 async function testConcurrentOperations(): Promise<void> {
