@@ -160,6 +160,7 @@ async function testConcurrentOperations(): Promise<void> {
   const teams = ['Lakers', 'Warriors', 'Celtics', 'Heat'];
   const allStats = await fetchMultipleTeamStats(teams);
   console.log('All team stats:', allStats.length, 'teams fetched');
+
   
   // Test Promise.allSettled() 
   const mixedTeams = ['Lakers', 'INVALID', 'Warriors', 'INVALID2'];
@@ -170,7 +171,7 @@ async function testConcurrentOperations(): Promise<void> {
   const fastestData = await fetchFromMultipleSources('Lakers');
   console.log('Fastest source:', fastestData?.source);
   
-  console.log('');
+  console.log('done');
 }
 
 // ============================================
