@@ -95,7 +95,7 @@ async function fetchMultipleTeamStats(teamNames: string[]): Promise<TeamStats[]>
     })
   )
   console.log(`Fetched the results in ${duration}ms ${JSON.stringify(results, null, 2)}`);
-  
+
   return results; // Replace with actual implementation
 }
 
@@ -107,8 +107,19 @@ async function fetchTeamStatsWithFallback(teamNames: string[]): Promise<TeamStat
   // 3. Provide fallback data for failed requests
   
   // Your implementation here:
-  
-  return [];
+
+  const results = await Promise.allSettled(
+    teamNames.map(team => fetchTeamStats(team))
+  )
+
+  const successful = results
+    .filter(result => result.status === 'fulfilled')
+    .map(result => result.value)
+
+  const rejected = results
+    .filter(result => result.status === 'rejected')
+
+  return successful;
 }
 
 // TODO 5: Racing patterns for fastest response
@@ -458,7 +469,7 @@ async function testErrorRecovery(): Promise<void> {
     const gameData = await fetcher.fetchGameData('Lakers vs Warriors');
     console.log('✅ Successfully fetched game data');
   } catch (error) {
-    console.log('❌ All fallbacks failed:', error);
+    console.log(' All fallbacks failed:', error);
   }
   
   // Test batch processing with error isolation
